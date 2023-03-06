@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\DtoAPI\General\Entity\**" />
+    <EmbeddedResource Remove="Models\DtoAPI\General\Entity\**" />
+    <None Remove="Models\DtoAPI\General\Entity\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Domins\LookUp\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Coins.Libraries\Coins.Libraries.csproj" />
+  </ItemGroup>
+
+</Project>

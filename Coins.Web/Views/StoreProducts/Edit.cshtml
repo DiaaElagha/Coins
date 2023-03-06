@@ -1,0 +1,73 @@
+﻿@model Coins.Web.Models.ViewModels.StoreProductVM
+
+@{
+    ViewData["Title"] = "تعديل المنتج";
+}
+<div class="kt-portlet kt-portlet--mobile">
+    <div class="kt-portlet__body">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="Name" asp-for="StoreProductNameAr" class="form-control-label sm-bolder"></label>
+                        <input asp-for="StoreProductNameAr" class="form-control border-gray">
+                        <span asp-validation-for="StoreProductNameAr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="Latitude" asp-for="StoreProductNameEn" class="form-control-label sm-bolder"></label>
+                        <input asp-for="StoreProductNameEn" class="form-control border-gray">
+                        <span asp-validation-for="StoreProductNameEn" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="Name" class="form-control-label sm-bolder">صورة المنتج الرئيسية</label>
+                        <input name="MainAttachment" type="file" class="form-control border-gray">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="StoreProductPrice" asp-for="StoreProductPrice" class="form-control-label  sm-bolder"></label>
+                        <input asp-for="StoreProductPrice" class="form-control border-gray">
+                        <span asp-validation-for="StoreProductPrice" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="Name" asp-for="StoreProductDescriptionAr" class="form-control-label sm-bolder"></label>
+                        <textarea asp-for="StoreProductDescriptionAr" class="form-control border-gray" rows="3"></textarea>
+                        <span asp-validation-for="StoreProductDescriptionAr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="Name" asp-for="StoreProductDescriptionEn" class="form-control-label sm-bolder"></label>
+                        <textarea asp-for="StoreProductDescriptionEn" class="form-control border-gray" rows="3"></textarea>
+                        <span asp-validation-for="StoreProductDescriptionEn" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="Attachments" class="form-control-label sm-bolder">صورة اضافية </label>
+                        <input type="file" multiple name="Attachments" class="form-control border-gray">
+                    </div>
+                </div>
+            </div>
+
+            <a href="@Context.Request.Headers["Referer"].ToString()" class="rounded btn btn-secondary">رجوع</a>
+            <button type="submit" class="rounded btn btn-primary">حفظ</button>
+        </form>
+    </div>
+</div>

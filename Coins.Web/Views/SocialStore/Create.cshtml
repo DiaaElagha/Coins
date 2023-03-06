@@ -1,0 +1,51 @@
+﻿@model Coins.Web.Models.ViewModels.SocialStoreVM
+@using Coins.Core.Constants.Enums
+
+@{
+    ViewData["Title"] = "اضافة نوع";
+    Layout = null;
+}
+
+<form asp-action="Create" method="post" class="ajaxForm" tname="#dataTableId" id="myForm">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="form-group">
+                <label for="Name" asp-for="UrlLink" class="form-control-label"></label>
+                <input asp-for="UrlLink" class="form-control">
+                <span asp-validation-for="UrlLink" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="Latitude" asp-for="IsActive" class="form-control-label"></label>
+                <br />
+                <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--brand">
+                    <label>
+                        <input type="checkbox" checked="checked" asp-for="IsActive">
+                        <span></span>
+                    </label>
+                </span>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="Name" asp-for="RewardNumberOfCoins" class="form-control-label"></label>
+                <input asp-for="RewardNumberOfCoins" class="form-control">
+                <span asp-validation-for="RewardNumberOfCoins" class="text-danger"></span>
+            </div>
+        </div>
+
+    </div>
+
+    <button type="button" class="rounded btn btn-secondary" data-dismiss="modal">اغلاق</button>
+    <button type="submit" class="rounded btn btn-primary">ارسال</button>
+</form>
+<script>
+    $('.selectpicker').selectpicker();
+    PageLoadActions();
+</script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+

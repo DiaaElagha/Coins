@@ -1,0 +1,935 @@
+﻿@using Coins.Core.Constants
+@{
+    string Action = null;
+    string Controller = null;
+    string currentURL = null;
+    try
+    {
+        Action = ViewContext.RouteData.Values["action"].ToString().ToLower();
+        Controller = ViewContext.RouteData.Values["Controller"].ToString().ToLower();
+        currentURL = "~/" + Controller + "/" + Action;
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+    }
+}
+<!DOCTYPE html>
+<html direction="rtl" dir="rtl" style="direction: rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] | MrCoins</title>
+    <meta name="description" content="Server-side processing examples">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--begin::Fonts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: {
+                "families": ["Poppins:300,400,500,600,700", "Roboto:300,400,500,600,700"]
+            },
+            active: function () {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+
+    <!--end::Fonts -->
+    <!--begin::Page Vendors Styles(used by this page) -->
+    <link href="~/adminpage/css/vendors/datatables.bundle.rtl.css" rel="stylesheet" type="text/css" />
+    <!--end::Page Vendors Styles -->
+    <!--begin::Global Theme Styles(used by all pages) -->
+    <link href="~/adminpage/css/global/vendors.bundle.rtl.css" rel="stylesheet" type="text/css" />
+    <link href="~/adminpage/css/global/style.bundle.rtl.css" rel="stylesheet" type="text/css" />
+    <!--end::Global Theme Styles -->
+    <!--begin::Layout Skins(used by all pages) light -->
+    <link href="~/adminpage/css/skins/header/base/light.rtl.css" rel="stylesheet" />
+    <link href="~/adminpage/css/skins/header/menu/light.rtl.css" rel="stylesheet" />
+    <link href="~/adminpage/css/skins/brand/light.rtl.css" rel="stylesheet" type="text/css" />
+    <link href="~/adminpage/css/skins/aside/light.rtl.css" rel="stylesheet" type="text/css" />
+    <!--end::Layout Skins -->
+    <link rel="shortcut icon" href="~/files/Default/LOGO_f_small.png" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&family=Roboto&display=swap" rel="stylesheet">
+    @RenderSection("Css", required: false)
+
+    <style>
+        input, textarea, small, button, span, b, a, body, h1, h2, h3, h4, h5, h6 {
+            font-family: Cairo !important;
+        }
+
+        span {
+            font-weight: 600
+        }
+
+        label, b, body, h1, h2, h3, h4, h5, h6 {
+            color: #101010 !important
+        }
+
+        .form-control-label {
+            margin-bottom: 10px !important
+        }
+
+        .kt-switch.kt-switch--sm input:empty ~ span {
+            height: 19px !important;
+        }
+
+        .kt-switch.kt-switch--sm input:checked ~ span:after {
+            margin-right: 19px !important;
+        }
+
+        .kt-switch.kt-switch--sm input:empty ~ span:after {
+            height: 15px !important;
+            width: 15px !important;
+            line-height: 15px !important;
+        }
+
+        .kt-switch.kt-switch--outline.kt-switch--brand input:checked ~ span:after {
+            background-color: #fa3e3f;
+            opacity: 1;
+        }
+
+        .btn-primary {
+            background-color: #fa3e3f !important;
+            border: 0 !important
+        }
+
+            .btn-primary:hover {
+                background-color: #f52324 !important;
+            }
+
+        .text-primary {
+            color: #fa3e3f !important
+        }
+
+        .color-mrcoins {
+            color: #fa3e3f !important;
+            font-weight: 600
+        }
+
+        .color-gray {
+            color: #8b8b8b !important
+        }
+
+        .border-gray {
+            border: 1px solid #c6c6c6 !important
+        }
+
+            .border-gray:focus {
+                border: 1px solid #6d7fdb !important
+            }
+
+        .kt-portlet .kt-portlet__body {
+            padding: 15px !important
+        }
+
+        .kt-portlet--mobile {
+            background-color: #fdfdfded !important;
+        }
+
+        #kt_header {
+        }
+
+        @@media (min-width:1025px) {
+            .kt-portlet.kt-portlet--mobile {
+                margin-top: -50px !important;
+            }
+        }
+
+        @@media (min-width:1281px) {
+            .kt-portlet.kt-portlet--mobile {
+                margin-top: -50px !important;
+            }
+        }
+
+        .kt-page--loading * {
+            text-align: right
+        }
+
+        #PopUp .close::before, #PopUp-Custom .close::before {
+            content: none;
+        }
+
+        /*start validation*/
+        .field-validation-error {
+            color: #fa3e3f !important;
+            font-weight: normal !important;
+        }
+
+        .field-validation-valid {
+            display: none !important;
+        }
+
+        input.input-validation-error {
+            border: 1px solid #fa3e3f !important;
+        }
+
+        .validation-summary-errors {
+            color: #fa3e3f !important;
+            font-weight: normal !important;
+            font-size: 1.1em !important;
+        }
+
+        .validation-summary-valid {
+            display: none !important;
+        }
+        /*end validation*/
+        .kt-notification .kt-notification__item:after {
+            border: 0;
+            content: ".";
+            font-size: 6rem;
+            line-height: 0;
+            position: relative;
+            bottom: 23px;
+            color: #0122e9;
+        }
+
+        /* For Spinner Ajax*/
+
+        .lds-dual-ring.hidden {
+            display: none;
+        }
+
+        .lds-dual-ring {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+        }
+
+            .lds-dual-ring:after {
+                content: " ";
+                display: block;
+                width: 64px;
+                height: 64px;
+                margin: 15% auto;
+                border-radius: 50%;
+                border: 6px solid #fff;
+                border-color: #435be9 transparent #325bb2 transparent;
+                animation: lds-dual-ring 1.2s linear infinite;
+            }
+
+        @@keyframes lds-dual-ring {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.39);
+            z-index: 999;
+            opacity: 1;
+            transition: all 0.5s;
+        }
+        /* End  Spinner Ajax*/
+
+        span.notification-badge {
+            position: relative;
+            top: -10px;
+            right: 10px;
+            margin-right: -18px;
+            font-size: 12px
+        }
+
+        .badge-status {
+            background-color: rgba(243, 243, 243, 0.80) !important;
+            color: #4e6af6;
+            font-weight: bold;
+            font-size: 7px !important;
+            padding: 6px;
+            margin-right: 6px
+        }
+
+        div.m-input-icon.m-input-icon--left {
+            border: 1px solid #bebebe
+        }
+
+        .background-color-canceled > td {
+            color: #bebebe !important
+        }
+
+        .checkbox {
+            -webkit-transform: scale(1.1, 1.1)
+        }
+
+        /*//-----------*/
+        ::-webkit-scrollbar {
+            width: 9px;
+            height: 4px;
+            background-color: #dddddd;
+            border: 1px solid #d5d5d5;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-color: #fa3e3f;
+        }
+
+        .scrollbar, table-responsive {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            float: left;
+        }
+
+            .scrollbar::-webkit-scrollbar-track {
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+                background-color: #F5F5F5;
+                border-radius: 5px;
+            }
+
+            .scrollbar::-webkit-scrollbar {
+                width: 4px;
+                background-color: #F5F5F5;
+            }
+
+            .scrollbar::-webkit-scrollbar-thumb {
+                border-radius: 5px;
+                -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+                background-image: -webkit-linear-gradient(330deg, #d4fc79 0%, #96e6a1 100%);
+                background-image: linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%);
+            }
+
+            .scrollbar:hover {
+                overflow-y: scroll;
+            }
+
+        .tooltip-inner {
+            border: 0.1px !important;
+            border-color: #525252 !important;
+            border-inline-style: solid !important;
+            font-weight: 400;
+            color: #000 !important;
+        }
+
+        .sm-bolder {
+            font-weight: 700 !important
+        }
+
+        .bolder {
+            font-weight: 800 !important
+        }
+
+        .icon-menu {
+            color: #303030 !important
+        }
+    </style>
+
+    <style>
+        td {
+            padding: 5px 1px 5px 1px !important;
+            font-size: 14px !important;
+            font-weight: 500;
+            color: #000000 !important
+        }
+
+        th {
+            font-weight: bold !important;
+            color: #210c56 !important
+        }
+
+        td a {
+            margin-left: 5px !important;
+        }
+
+        .m-portlet__body {
+            padding-top: 0px !important;
+        }
+
+        .dt-buttons {
+            margin-top: 12px
+        }
+
+        div.m-input-icon.m-input-icon--left {
+            border: 1px solid #bebebe
+        }
+
+    </style>
+
+</head>
+
+<!-- end::Head -->
+<!-- begin::Body -->
+<body class="kt-quick-panel--right kt-demo-panel--right kt-offcanvas-panel--right kt-header--fixed kt-header-mobile--fixed kt-subheader--fixed kt-subheader--enabled kt-subheader--solid kt-aside--enabled kt-aside--fixed kt-page--loading">
+
+    <input type="hidden" value="false" id="can-publish" />
+
+    <div id="loader" class="lds-dual-ring hidden overlay"></div>
+    <!-- begin:: Page -->
+    <!-- begin:: Header Mobile -->
+    <div id="kt_header_mobile" class="kt-header-mobile  kt-header-mobile--fixed ">
+        <div class="kt-header-mobile__logo">
+            <a href="/">
+                <img alt="Logo" src="https://theme.zdassets.com/theme_assets/1932863/6021c0f9a29e9d1733c74b3d02d0afd5d6a76b87.png" style="height:25px;padding-right:10px" />
+            </a>
+        </div>
+        <div class="kt-header-mobile__toolbar">
+            <button class="kt-header-mobile__toggler kt-header-mobile__toggler--left" id="kt_aside_mobile_toggler"><span></span></button>
+
+            <button class="kt-header-mobile__topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more"></i></button>
+        </div>
+    </div>
+
+    <!-- end:: Header Mobile -->
+    <div class="kt-grid kt-grid--hor kt-grid--root">
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+
+            <!-- begin:: Aside -->
+            <button class="kt-aside-close " id="kt_aside_close_btn"><i class="la la-close"></i></button>
+            <div class="kt-aside  kt-aside--fixed  kt-grid__item kt-grid kt-grid--desktop kt-grid--hor-desktop" id="kt_aside">
+
+                <!-- begin:: Aside -->
+                <div class="kt-aside__brand kt-grid__item " id="kt_aside_brand" style="border-bottom:1px #f6f6f6 solid">
+                    <div class="kt-aside__brand-logo">
+                        <a href="/">
+                            <img class="logo-img" alt="Logo" src="https://theme.zdassets.com/theme_assets/1932863/6021c0f9a29e9d1733c74b3d02d0afd5d6a76b87.png" style="width:125px;margin-right: 20px;" />
+                        </a>
+                    </div>
+                    <div class="kt-aside__brand-tools">
+                        <button class="kt-aside__brand-aside-toggler" id="kt_aside_toggler">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon id="Shape" points="0 0 24 0 24 24 0 24" />
+                                        <path d="M5.29288961,6.70710318 C4.90236532,6.31657888 4.90236532,5.68341391 5.29288961,5.29288961 C5.68341391,4.90236532 6.31657888,4.90236532 6.70710318,5.29288961 L12.7071032,11.2928896 C13.0856821,11.6714686 13.0989277,12.281055 12.7371505,12.675721 L7.23715054,18.675721 C6.86395813,19.08284 6.23139076,19.1103429 5.82427177,18.7371505 C5.41715278,18.3639581 5.38964985,17.7313908 5.76284226,17.3242718 L10.6158586,12.0300721 L5.29288961,6.70710318 Z" id="Path-94" fill="#000000" fill-rule="nonzero" transform="translate(8.999997, 11.999999) scale(-1, 1) translate(-8.999997, -11.999999) " />
+                                        <path d="M10.7071009,15.7071068 C10.3165766,16.0976311 9.68341162,16.0976311 9.29288733,15.7071068 C8.90236304,15.3165825 8.90236304,14.6834175 9.29288733,14.2928932 L15.2928873,8.29289322 C15.6714663,7.91431428 16.2810527,7.90106866 16.6757187,8.26284586 L22.6757187,13.7628459 C23.0828377,14.1360383 23.1103407,14.7686056 22.7371482,15.1757246 C22.3639558,15.5828436 21.7313885,15.6103465 21.3242695,15.2371541 L16.0300699,10.3841378 L10.7071009,15.7071068 Z" id="Path-94" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(15.999997, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-15.999997, -11.999999) " />
+                                    </g>
+                                </svg>
+                            </span>
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon id="Shape" points="0 0 24 0 24 24 0 24" />
+                                        <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" id="Path-94" fill="#000000" fill-rule="nonzero" />
+                                        <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" id="Path-94" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) " />
+                                    </g>
+                                </svg>
+                            </span>
+                        </button>
+
+                        <!--
+                        <button class="kt-aside__brand-aside-toggler kt-aside__brand-aside-toggler--left" id="kt_aside_toggler"><span></span></button>
+                        -->
+                    </div>
+                </div>
+
+                <!-- end:: Aside -->
+                <!-- begin:: Aside Menu -->
+                <div class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_aside_menu_wrapper">
+                    <div id="kt_aside_menu" class="kt-aside-menu " data-ktmenu-vertical="1" data-ktmenu-scroll="1" data-ktmenu-dropdown-timeout="500">
+
+                        <ul class="kt-menu__nav ">
+
+                            @if (ViewBag.Role == UsersRoles.Admin)
+                            {
+                                <li class="kt-menu__item " aria-haspopup="true">
+                                    <a href="~/Stores/Index" class="kt-menu__link  menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <polygon id="Bound" points="0 0 24 0 24 24 0 24" />
+                                                    <path d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z" id="Shape" fill="#000000" fill-rule="nonzero" />
+                                                    <path d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z" id="Path" fill="#000000" opacity="0.3" />
+                                                </g>
+                                            </svg>
+                                        </span>
+                                        <span class="kt-menu__link-text">المتاجر</span>
+                                    </a>
+                                </li>
+                            }
+
+
+                            @if (ViewBag.Role == UsersRoles.StoreAdmin)
+                            {
+                                <li class="kt-menu__item pb-3">
+                                    <div class="row">
+                                        <div class="col-md text-center ml-5 mr-5">
+                                            <button id="publish-btn" class="btn btn-primary btn-block btn-pill shadow" style="text-align:center!important">نشر</button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="kt-menu__item " aria-haspopup="true">
+                                    <a href="~/" class="kt-menu__link menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <i class="fa fa-list icon-menu"></i>
+                                        </span>
+                                        <span class="kt-menu__link-text bolder">لوحة المعلومات</span>
+                                    </a>
+                                </li>
+
+                                <li class="kt-menu__item " aria-haspopup="true">
+                                    <a href="~/MyStore/Index" class="kt-menu__link menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <i class="fa fa-home icon-menu "></i>
+                                        </span>
+                                        <span class="kt-menu__link-text bolder">المعلومات الرئيسية</span>
+
+                                        <label class="checkbox pt-2">
+                                            <input disabled class="checkbox-panel" type="checkbox" orderid="1">
+                                            <span></span>
+                                        </label>
+                                    </a>
+                                </li>
+                                <li class="kt-menu__item " aria-haspopup="true">
+                                    <a href="~/StoreBranchs/Index" class="kt-menu__link menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <i class="fa fa-building icon-menu"></i>
+                                        </span>
+                                        <span class="kt-menu__link-text bolder">إدارة الأفرع</span>
+
+                                        <label class="checkbox pt-2">
+                                            <input disabled class="checkbox-panel" type="checkbox" orderid="2">
+                                            <span></span>
+                                        </label>
+                                    </a>
+                                </li>
+                                <li class="kt-menu__item " aria-haspopup="true">
+                                    <a href="~/SocialStore/Index" class="kt-menu__link menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <i class="fas fa-coins icon-menu"></i>
+                                        </span>
+                                        <span class="kt-menu__link-text bolder">كسب النقاط</span>
+
+                                        <label class="checkbox pt-2">
+                                            <input disabled class="checkbox-panel" type="checkbox" orderid="3">
+                                            <span></span>
+                                        </label>
+                                    </a>
+                                </li>
+                                <li class="kt-menu__item " aria-haspopup="true">
+                                    <a href="~/StoreVouchers/Index" class="kt-menu__link menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <i class="fas fa-money-bill-alt icon-menu"></i>
+                                        </span>
+                                        <span class="kt-menu__link-text bolder">المكافأت</span>
+
+                                        <label class="checkbox pt-2">
+                                            <input disabled class="checkbox-panel" type="checkbox" orderid="4">
+                                            <span></span>
+                                        </label>
+                                    </a>
+                                </li>
+                                <li class="kt-menu__item " aria-haspopup="true">
+                                    <a href="~/ReferralFriends/Index" class="kt-menu__link menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <i class="fas fa-user-friends icon-menu"></i>
+                                        </span>
+                                        <span class="kt-menu__link-text bolder">مشاركة الأصدقاء</span>
+                                    </a>
+                                </li>
+                                <li class="kt-menu__item " aria-haspopup="true">
+                                    <a href="~/ClientsStore/Index" class="kt-menu__link menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <i class="fa fa-users icon-menu"></i>
+                                        </span>
+                                        <span class="kt-menu__link-text bolder">العملاء</span>
+                                    </a>
+                                </li>
+                                <li class="kt-menu__item " aria-haspopup="true">
+                                    <a href="~/ClientsLogs/Index" class="kt-menu__link menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <i class="fa fa-history icon-menu"></i>
+                                        </span>
+                                        <span class="kt-menu__link-text bolder">سجل الاحداث</span>
+                                    </a>
+                                </li>
+                            }
+
+
+                            @if (ViewBag.Role == UsersRoles.Admin)
+                            {
+                                <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect id="bound" x="0" y="0" width="24" height="24" />
+                                                    <rect id="Rectangle-7" fill="#000000" x="4" y="4" width="7" height="7" rx="1.5" />
+                                                    <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" id="Combined-Shape" fill="#000000" opacity="0.3" />
+                                                </g>
+                                            </svg>
+                                        </span><span class="kt-menu__link-text">الإشعارات والطلبات</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+                                    </a>
+                                    <div class="kt-menu__submenu ">
+                                        <span class="kt-menu__arrow"></span>
+                                        <ul class="kt-menu__subnav">
+                                            <li class="kt-menu__item  kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Applications</span></span></li>
+
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="~/Notification/Index" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">الإشعارات</span></a></li>
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="~/ContactUs/Index" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">طلبات التواصل</span></a></li>
+                                            <li class="kt-menu__item " aria-haspopup="true"><a href="~/Registers/Index" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">طلبات التسجيل</span></a></li>
+
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="kt-menu__item  kt-menu__item--submenu" aria-haspopup="true" data-ktmenu-submenu-toggle="hover">
+                                    <a href="javascript:;" class="kt-menu__link kt-menu__toggle menu_link">
+                                        <span class="kt-menu__link-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <rect id="bound" x="0" y="0" width="24" height="24" />
+                                                    <rect id="Rectangle-7" fill="#000000" x="4" y="4" width="7" height="7" rx="1.5" />
+                                                    <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" id="Combined-Shape" fill="#000000" opacity="0.3" />
+                                                </g>
+                                            </svg>
+                                        </span><span class="kt-menu__link-text">الاعدادات</span><i class="kt-menu__ver-arrow la la-angle-right"></i>
+                                    </a>
+                                    <div class="kt-menu__submenu ">
+                                        <span class="kt-menu__arrow"></span>
+                                        <ul class="kt-menu__subnav">
+                                            <li class="kt-menu__item kt-menu__item--parent" aria-haspopup="true"><span class="kt-menu__link"><span class="kt-menu__link-text">Applications</span></span></li>
+
+
+                                            <li class="kt-menu__item" aria-haspopup="true">
+                                                <a href="~/CompanyInformation/Index" class="kt-menu__link">
+                                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                                    <span class="kt-menu__link-text">اعدادات الشركة</span>
+                                                </a>
+                                            </li>
+                                            <li class="kt-menu__item" aria-haspopup="true">
+                                                <a href="~/SliderHome/Index" class="kt-menu__link">
+                                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                                    <span class="kt-menu__link-text">سلايدر الرئيسية</span>
+                                                </a>
+                                            </li>
+                                            <li class="kt-menu__item" aria-haspopup="true">
+                                                <a href="~/StoresCategories/Index" class="kt-menu__link">
+                                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                                    <span class="kt-menu__link-text">تصنيفات المتاجر</span>
+                                                </a>
+                                            </li>
+                                            <li class="kt-menu__item" aria-haspopup="true">
+                                                <a href="~/Advantages/Index" class="kt-menu__link">
+                                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                                    <span class="kt-menu__link-text">مزايا المتاجر</span>
+                                                </a>
+                                            </li>
+                                            <li class="kt-menu__item" aria-haspopup="true">
+                                                <a href="~/StorePriceType/Index" class="kt-menu__link">
+                                                    <i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i>
+                                                    <span class="kt-menu__link-text">انواع الاسعار</span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </li>
+                            }
+
+                        </ul>
+
+                    </div>
+                </div>
+
+                <!-- end:: Aside Menu -->
+            </div>
+
+            <!-- end:: Aside -->
+            <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+
+                <!-- begin:: Header -->
+                <div id="kt_header" class="kt-header kt-grid__item  kt-header--fixed">
+
+                    <!-- begin:: Header Menu -->
+                    <button class="kt-header-menu-wrapper-close" id="kt_header_menu_mobile_close_btn"><i class="la la-close"></i></button>
+                    <div class="kt-header-menu-wrapper" id="kt_header_menu_wrapper">
+                        <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile  kt-header-menu--layout-default ">
+
+                        </div>
+                    </div>
+
+                    <!-- end:: Header Menu -->
+                    <!-- begin:: Header Topbar -->
+                    <div class="kt-header__topbar">
+                        <!--end: Quick panel toggler -->
+                        <!--begin: NOTIFICATION Bar -->
+                        <!--<div class="kt-header__topbar-item kt-header__topbar-item--user">
+                        <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
+                            <span class="kt-header__topbar-icon">
+                                <span id="count_notifications_bell" class="notification-badge kt-badge kt-badge--danger"><b id="count_notifications"></b></span>
+                                <i class="fa fa-bell text-primary"></i>
+                            </span>
+
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-lg">-->
+                        <!--begin: Head -->
+                        <!--<div class="kt-user-card kt-user-card--skin-dark pt-3 pb-3">
+                            <div class="text-primary">
+                                <a href="javascript:void(0)" id="set_all_notifications_as_read">تمييز الكل كمقروء </a>
+                            </div>
+                        </div>-->
+                        <!--end: Head -->
+                        <!--begin: Navigation -->
+                        <!--<div class="kt-notification">
+                            <div id="notifications-panels" class="notifications-panels scroll" data-scroll="true" data-height="325" data-mobile-height="200">
+
+                            </div>
+
+
+                            <div class="kt-notification__custom p-3">
+                                <a href="~/Admin/Notification/Index" class="btn btn-label btn-label-brand btn-sm btn-bold btn-block"><b>عرض جميع الاشعارات</b></a>
+                            </div>
+                        </div>-->
+                        <!--end: Navigation -->
+                        <!--</div>
+                        </div>-->
+                        <!--end: NOTIFICATION Bar -->
+                        <!--begin: Search -->
+                        <!--begin: Search -->
+                        @*<div class="kt-header__topbar-item kt-header__topbar-item--search dropdown" id="kt_quick_search_toggle">
+                                <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
+                                    <span class="kt-header__topbar-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <rect id="bound" x="0" y="0" width="24" height="24" />
+                                                <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" id="Path-2" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                                <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" id="Path" fill="#000000" fill-rule="nonzero" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-lg">
+                                    <div class="kt-quick-search kt-quick-search--inline" id="kt_quick_search_inline">
+                                        <form method="get" class="kt-quick-search__form">
+                                            <div class="input-group">
+                                                <div class="input-group-prepend"><span class="input-group-text"><i class="flaticon2-search-1"></i></span></div>
+                                                <input type="text" class="form-control kt-quick-search__input" placeholder="Search...">
+                                                <div class="input-group-append"><span class="input-group-text"><i class="la la-close kt-quick-search__close"></i></span></div>
+                                            </div>
+                                        </form>
+                                        <div class="kt-quick-search__wrapper kt-scroll" data-scroll="true" data-height="300" data-mobile-height="200">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        <!--end: Search -->
+                        <!--begin: Quick panel toggler -->
+                        @*<div class="kt-header__topbar-item kt-header__topbar-item--quick-panel" data-toggle="kt-tooltip" title="Quick panel" data-placement="right">
+                                <span class="kt-header__topbar-icon" id="kt_quick_panel_toggler_btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" class="kt-svg-icon">
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <rect id="bound" x="0" y="0" width="24" height="24" />
+                                            <rect id="Rectangle-7" fill="#000000" x="4" y="4" width="7" height="7" rx="1.5" />
+                                            <path d="M5.5,13 L9.5,13 C10.3284271,13 11,13.6715729 11,14.5 L11,18.5 C11,19.3284271 10.3284271,20 9.5,20 L5.5,20 C4.67157288,20 4,19.3284271 4,18.5 L4,14.5 C4,13.6715729 4.67157288,13 5.5,13 Z M14.5,4 L18.5,4 C19.3284271,4 20,4.67157288 20,5.5 L20,9.5 C20,10.3284271 19.3284271,11 18.5,11 L14.5,11 C13.6715729,11 13,10.3284271 13,9.5 L13,5.5 C13,4.67157288 13.6715729,4 14.5,4 Z M14.5,13 L18.5,13 C19.3284271,13 20,13.6715729 20,14.5 L20,18.5 C20,19.3284271 19.3284271,20 18.5,20 L14.5,20 C13.6715729,20 13,19.3284271 13,18.5 L13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z" id="Combined-Shape" fill="#000000" opacity="0.3" />
+                                        </g>
+                                    </svg>
+                                </span>
+                            </div>*@
+
+                        <!--end: Quick panel toggler -->
+                        <!--begin: User Bar -->
+                        @if (ViewBag.Role != null)
+                        {
+                            <div class="kt-header__topbar-item kt-header__topbar-item--user">
+                                <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="0px,0px">
+                                    <div class="kt-header__topbar-user">
+                                        <span class="kt-header__topbar-username kt-hidden-mobile">@ViewBag.FullName</span>
+                                        <span class="kt-header__topbar-welcome kt-hidden-mobile">, مرحبا</span>
+                                        <img class="kt-hidden" alt="Pic" src="~/files/Default/default-user.png" />
+
+                                        <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
+                                        <span class="kt-badge kt-badge--username kt-badge--unified-success kt-badge--lg kt-badge--rounded kt-badge--bold">@{var ss = ViewBag.FullName as string;} @(ss != null ? ss.Substring(0, 2) : "AA")</span>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-top-unround dropdown-menu-xl">
+
+                                    <!--begin: Head -->
+                                    <div class="kt-user-card kt-user-card--skin-dark kt-notification-item-padding-x" @*style="background-image: url(/files/Default/default-user.png)"*@>
+                                        <!--<div class="kt-user-card__avatar">
+                                        <img class="kt-hidden" alt="Pic" src="" />-->
+                                        <!--use below badge element instead the user avatar to display username's first letter(remove kt-hidden class to display it) -->
+                                        <!--<span class="kt-badge kt-badge--lg kt-badge--rounded kt-badge--bold kt-font-success"></span>
+                                        </div>-->
+                                        <div class="kt-user-card__name text-dark">
+                                            اسم المستخدم:
+                                            <span class="text-primary">&nbsp @ViewBag.UserName</span>
+                                            <br />
+                                            الصلاحية:
+                                            <span class="text-primary">&nbsp @ViewBag.UserType</span>
+                                        </div>
+                                        <div class="kt-user-card__badge">
+                                            <span class="btn btn-success btn-sm btn-bold btn-font-md">نشط</span>
+                                        </div>
+                                    </div>
+
+                                    <!--end: Head -->
+                                    <!--begin: Navigation -->
+                                    <div class="kt-notification">
+                                        <a href="~/Identity/Account/Manage/Index" class="kt-notification__item">
+                                            <div class="kt-notification__item-icon">
+                                                <i class="flaticon2-calendar-3 kt-font-success"></i>
+                                            </div>
+                                            <div class="kt-notification__item-details">
+                                                <div class="kt-notification__item-title kt-font-bold">
+                                                    صفحتي الشخصية
+                                                </div>
+                                                <div class="kt-notification__item-time">
+                                                    اعدادات الحساب والمزيد
+                                                </div>
+                                            </div>
+                                        </a>
+
+                                        <div class="kt-notification__custom kt-space-between">
+                                            <a href="~/Logout" class="btn btn-label btn-label-brand btn-sm btn-bold"><b>تسجيل الخروج</b></a>
+                                        </div>
+                                    </div>
+
+                                    <!--end: Navigation -->
+                                </div>
+                            </div>
+
+                        }
+                        <!--end: User Bar -->
+                    </div>
+
+                    <!-- end:: Header Topbar -->
+                </div>
+
+                <!-- end:: Header -->
+                <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+
+                    <!-- begin:: Content -->
+                    <div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
+                        @RenderBody()
+                    </div>
+
+                    <!-- end:: Content -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- end:: Page -->
+    <!-- begin::Scrolltop -->
+    <div id="kt_scrolltop" class="kt-scrolltop">
+        <i class="fa fa-arrow-up"></i>
+    </div>
+
+    <div class="modal fade" id="PopUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="la la-close text-primary"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="Confirm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLabel">تحذير</h3>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size: 18px">هل انت متأكد من استمرار العملية ؟</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+                    <button type="button" class="btn btn-danger">نعم</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- begin::Global Config(global config for global JS sciprts) -->
+    <script>
+        var KTAppOptions = {
+            "colors": {
+                "state": {
+                    "brand": "#5d78ff",
+                    "dark": "#282a3c",
+                    "light": "#ffffff",
+                    "primary": "#5867dd",
+                    "success": "#34bfa3",
+                    "info": "#36a3f7",
+                    "warning": "#ffb822",
+                    "danger": "#fd3995"
+                },
+                "base": {
+                    "label": ["#c5cbe3", "#a1a8c3", "#3d4465", "#3e4466"],
+                    "shape": ["#f0f3ff", "#d9dffa", "#afb4d4", "#646c9a"]
+                }
+            }
+        };
+    </script>
+    <!-- end::Global Config -->
+    <!--begin::Global Theme Bundle(used by all pages) -->
+    <script src="~/adminpage/js/vendors.bundle.js" type="text/javascript"></script>
+    <script src="~/adminpage/js/scripts.bundle.js" type="text/javascript"></script>
+    <!--end::Global Theme Bundle -->
+    <!--begin::Page Vendors(used by this page) -->
+    <script src="~/adminpage/js/datatables.bundle.js" type="text/javascript"></script>
+    <!--end::Page Vendors -->
+
+    <script src="~/js/MainLayoutAJAX.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    @RenderSection("Scripts", required: false)
+
+    <script>
+        $('.selectpicker').selectpicker();
+        //$("[name=SearchKey]").focus();
+
+    </script>
+
+    <script>
+        $('#publish-btn').prop("disabled", true);
+
+        $('#publish-btn').click(function () {
+            $.ajax({
+                url: '@Url.Action("PublishStore", "MyStore")',
+                type: 'post',
+                success: function (result) {
+                    ShowMessage("s: تم نشر تطبيقك بنجاح");
+                }
+            });
+        });
+
+        var numItems = $('.checkbox-panel').length;
+        $('.kt-menu__link').each(function (i, obj) {
+            var currentLinkUrl = "~" + $(this).attr("href").toLowerCase();
+            var checkBox = $(this).find('.checkbox-panel');
+            var checkBoxorderid = checkBox.attr("orderid");
+
+            if (currentLinkUrl == '@currentURL') {
+                $(this).css({
+                    'background-color': '#e4e4e4',
+                    'border-left': '3px #fa5a5a solid'
+                });
+
+                $('.checkbox-panel').each(function (iC, objC) {
+                    var checkBoxorderidC = $(this).attr("orderid");
+                    if (parseInt(checkBoxorderidC) < parseInt(checkBoxorderid)) {
+                        $(this).attr('checked', 'checked');
+                    }
+                });
+                if (parseInt(numItems) == parseInt(checkBoxorderid)) {
+                    $('#publish-btn').prop("disabled", false);
+                }
+            }
+        });
+    </script>
+
+</body>
+
+<!-- end::Body -->
+</html>

@@ -1,0 +1,114 @@
+﻿@model Coins.Web.Models.ViewModels.StoreVM
+
+@{
+    ViewData["Title"] = "اضافة نوع";
+    Layout = null;
+}
+
+<form asp-action="Create" method="post" class="ajaxForm" tname="#dataTableId" id="myForm" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Name" asp-for="StoreUserName" class="form-control-label text-primary"></label>
+                <input asp-for="StoreUserName" class="form-control">
+                <span asp-validation-for="StoreUserName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Latitude" asp-for="StorePassword" class="form-control-label text-primary"></label>
+                <input asp-for="StorePassword" class="form-control">
+                <span asp-validation-for="StorePassword" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Name" asp-for="StoreNameAr" class="form-control-label"></label>
+                <input asp-for="StoreNameAr" class="form-control">
+                <span asp-validation-for="StoreNameAr" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Latitude" asp-for="StoreNameEn" class="form-control-label"></label>
+                <input asp-for="StoreNameEn" class="form-control">
+                <span asp-validation-for="StoreNameEn" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Name" asp-for="StoreCategoryId" class="form-control-label"></label>
+                <select asp-for="StoreCategoryId" id="area-id-receiver" asp-items="ViewBag.CategoriesList" data-size="6" data-live-search="true" class="rounded selectpicker" data-width="100%">
+                    <option value="">اختر التصنيف</option>
+                </select>
+                <span asp-validation-for="StoreCategoryId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Name" asp-for="StorePriceTypeId" class="form-control-label"></label>
+                <select asp-for="StorePriceTypeId" id="area-id-receiver" asp-items="ViewBag.PriceTypesList" data-size="6" data-live-search="true" class="rounded selectpicker" data-width="100%">
+                    <option value="">اختر النوع</option>
+                </select>
+                <span asp-validation-for="StorePriceTypeId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Latitude" asp-for="IsActive" class="form-control-label"></label>
+                <br />
+                <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--brand">
+                    <label>
+                        <input type="checkbox" checked="checked" asp-for="IsActive">
+                        <span></span>
+                    </label>
+                </span>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="Name" class="form-control-label">اختر الشعار </label>
+                <input name="ImageLogo" type="file" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Name" asp-for="StoreDescriptionAr" class="form-control-label"></label>
+                <textarea asp-for="StoreDescriptionAr" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="StoreDescriptionAr" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Name" asp-for="StoreDescriptionEn" class="form-control-label"></label>
+                <textarea asp-for="StoreDescriptionEn" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="StoreDescriptionEn" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <button type="button" class="rounded btn btn-secondary" data-dismiss="modal">اغلاق</button>
+    <button type="submit" class="rounded btn btn-primary">ارسال</button>
+</form>
+<script>
+    $('.selectpicker').selectpicker();
+    PageLoadActions();
+</script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+

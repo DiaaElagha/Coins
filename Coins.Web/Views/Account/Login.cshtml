@@ -1,0 +1,37 @@
+﻿@model Coins.Web.Models.ViewModels.LoginViewModel
+
+@{
+    ViewData["Title"] = "تسجيل الدخول";
+    Layout = "_LayoutAuth";
+}
+
+<div class="kt-login__logo">
+    <img src="~/files/Default/LOGO_f_small.png" width="35%">
+</div>
+<div class="kt-login__signin">
+    <div class="kt-login__head">
+        <h3 class="kt-login__title"> تسجيل الدخول للنظام | MrCoins</h3>
+    </div>
+    <form asp-action="Login" class="kt-form" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+        <div asp-validation-summary="All" class="text-danger"> </div>
+        <div class="input-group">
+            <input class="form-control" placeholder="اسم المستخدم" asp-for="Username" autocomplete="off">
+        </div>
+        <span asp-validation-for="Username" class="text-danger"> </span>
+        <div class="input-group">
+            <input class="form-control" placeholder="كلمة المرور" asp-for="Password">
+        </div>
+        <span asp-validation-for="Password" class="text-danger"> </span>
+        <div class="row kt-login__extra">
+            <div class="col">
+                <label class="kt-checkbox">
+                    <input type="checkbox" asp-for="RememberMe"> تذكرني
+                    <span> </span>
+                </label>
+            </div>
+        </div>
+        <div class="kt-login__actions">
+            <button id="kt_login_signin_submit1" type="submit" class="btn btn-brand btn-elevate kt-login__btn-primary"> تسجيل الدخول</button>
+        </div>
+    </form>
+</div>

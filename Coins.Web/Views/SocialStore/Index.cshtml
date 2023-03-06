@@ -1,0 +1,249 @@
+﻿@model Coins.Web.Models.ViewModels.EarnCoinsVM
+@using Coins.Web.Models.ViewModels
+@using Coins.Core.Constants.Enums
+@{
+    ViewData["Title"] = "كسب النقاط";
+}
+
+@section Css{
+    <style>
+
+        .inActive-bg {
+            background-color: rgb(255 0 0 / 0.05) !important
+        }
+
+        .font-size-panel {
+            font-size: 15px !important
+        }
+    </style>
+}
+@{
+    int iFB = Model.SocialStores.FindIndex(delegate (SocialStoreVM employee)
+    {
+        return employee.SocialType == SocialType.Facebook;
+    });
+    int iIN = Model.SocialStores.FindIndex(delegate (SocialStoreVM employee)
+    {
+        return employee.SocialType == SocialType.Instagram;
+    });
+}
+<div class="kt-portlet kt-portlet--mobile" style="background-color:rgb(0 0 0 / 0.00)!important">
+    <partial name="_MsgPartial" />
+
+    <div class="card border-0 p-2">
+        <div class="card-body">
+            <h5 class="sm-bolder">كسب النقاط</h5>
+            <h6 class="pt-1 pb-1">ابتكر طرق يمكن لعملائك من خلالها كسب النقاط عند انضمامهم الى علامتك التجارية ومشاركتها والتفاعل معها</h6>
+            <a href="#" class="color-mrcoins"><u>تعرف على المزيد حول كيفية كسب العملاء النقاط</u></a>
+        </div>
+    </div>
+
+    <form asp-action="Index" method="post">
+
+        <input type="hidden" asp-for="SocialStores[iFB].SocialType" value="@Model.SocialStores[iFB].SocialType">
+        <input type="hidden" asp-for="SocialStores[iIN].SocialType" value="@Model.SocialStores[iIN].SocialType">
+
+        <div class="card border-0 mt-3 p-2">
+            <div class="card-body">
+                <h5 class="sm-bolder">استبدال قيمة الطلب</h5>
+                <h6 class="pt-1 pb-1 color-gray">في كل مرة يقوم فيها العميل بعملة بشراء، سيتم مكافأته بنقاط يمكن استخدامها للحصول على خصومات على الطلبات المستقبلية أو استبدالها بقسيمة</h6>
+                <br />
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="Name" asp-for="DefineCurrentCurrencyToCoins" class="form-control-label sm-bolder"></label>
+                            <input asp-for="DefineCurrentCurrencyToCoins" class="form-control border-gray">
+                            <span class="color-gray">يكتسب العملاء X نقطة مقابل كل دينار يتم انفاقه</span>
+                            <span asp-validation-for="DefineCurrentCurrencyToCoins" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="Name" class="form-control-label sm-bolder">
+                                <span class="kt-switch kt-switch--sm kt-switch--outline kt-switch--icon kt-switch--brand">
+                                    <label>
+                                        <input class="activation__checkbox1" type="checkbox" asp-for="IsActiveExpiedCoins">
+                                        <span></span>
+                                        <label class="pl-2 sm-bolder font-size-panel">تفعيل صلاحية النقاط</label>
+                                    </label>
+                                </span>
+                            </label>
+                            <input asp-for="ExpiedCoinsAfterDays" class="form-control border-gray activation__input1">
+                            <span class="color-gray">تنتهي صلاحية النقاط بعد X يوم من اكتسابها</span>
+                            <span asp-validation-for="ExpiedCoinsAfterDays" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card border-0 mt-3 p-2">
+            <div class="card-body mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Name" class="form-control-label sm-bolder">
+                                <span class="kt-switch kt-switch--sm kt-switch--outline kt-switch--icon kt-switch--brand">
+                                    <label>
+                                        <input type="checkbox" asp-for="SocialStores[iFB].IsActive" class="activation__checkbox2">
+                                        <span></span>
+                                        <label class="pl-2 sm-bolder font-size-panel">متابعة على الفيسبوك</label>
+                                    </label>
+                                </span>
+                            </label>
+                            <br />
+                            <span class="color-gray">شجع العملاء على متابعة صفحتك على الفيسبوك من خلال مكافأتهم بالنقاط ( متاحة مرة واحدة فقط لكل عميل )</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="form-control-label sm-bolder">رابط صفحة الفيسبوك</label>
+                            <input asp-for="SocialStores[iFB].UrlLink" class="form-control border-gray activation__input2">
+                            <span asp-validation-for="SocialStores[iFB].UrlLink" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="form-control-label sm-bolder">النقاط الممنوحة</label>
+                            <input asp-for="SocialStores[iFB].RewardNumberOfCoins" class="form-control border-gray activation__input2">
+                            <span asp-validation-for="SocialStores[iFB].RewardNumberOfCoins" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card border-0 mt-3 p-2">
+            <div class="card-body mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Name" class="form-control-label sm-bolder">
+                                <span class="kt-switch kt-switch--sm kt-switch--outline kt-switch--icon kt-switch--brand">
+                                    <label>
+                                        <input type="checkbox" asp-for="SocialStores[iIN].IsActive" class="activation__checkbox2">
+                                        <span></span>
+                                        <label class="pl-2 sm-bolder font-size-panel">متابعة على الإنستغرام</label>
+                                    </label>
+                                </span>
+                            </label>
+                            <br />
+                            <span class="color-gray">شجع العملاء على متابعة صفحتك على الإنستغرام من خلال مكافأتهم بالنقاط ( متاحة مرة واحدة فقط لكل عميل )</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="form-control-label sm-bolder">اسم المستخدم على الإنستغرام</label>
+                            <input asp-for="SocialStores[iIN].UrlLink" class="form-control border-gray activation__input2">
+                            <span asp-validation-for="SocialStores[iIN].UrlLink" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="form-control-label sm-bolder">النقاط الممنوحة</label>
+                            <input asp-for="SocialStores[iIN].RewardNumberOfCoins" class="form-control border-gray activation__input2">
+                            <span asp-validation-for="SocialStores[iIN].RewardNumberOfCoins" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="card border-0 mt-3 p-2">
+            <div class="card-body mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Name" class="form-control-label sm-bolder">
+                                <span class="kt-switch kt-switch--sm kt-switch--outline kt-switch--icon kt-switch--brand">
+                                    <label>
+                                        <input type="checkbox" asp-for="IsActiveGoogleMapRate" class="activation__checkbox2">
+                                        <span></span>
+                                        <label class="pl-2 sm-bolder font-size-panel">تقييم على جوجل ماب</label>
+                                    </label>
+                                </span>
+                            </label>
+                            <br />
+                            <span class="color-gray">شجع العملاء على تقييم متجرك في جوجل ماب من خلال مكافأتهم بالنقاط ( متاحة مرة واحدة فقط لكل عميل على كل فرع )</span>
+                        </div>
+                    </div>
+                </div>
+
+                @{
+                    SelectList selectListBraches = ViewBag.StoreBranchs as SelectList;
+                }
+
+                <div class="row">
+                    @for (int i = 0; i < Model.SocialStoresGoogleMap.Count(); i++)
+                    {
+                        @*<div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="form-control-label sm-bolder">@selectListBraches.FirstOrDefault(x => x.Value == Model.SocialStoresGoogleMap[i].StoreBranchId.ToString()).Text</label>
+                                    <select asp-for="SocialStoresGoogleMap[i].StoreBranchId" id="area-id-receiver" asp-items="selectListBraches.Where(x => x.Value == Model.SocialStoresGoogleMap[i].StoreBranchId.ToString())" data-size="6" class="rounded selectpicker  border-gray" data-width="100%">
+                                    </select>
+                                    <span asp-validation-for="SocialStoresGoogleMap[i].StoreBranchId" class="text-danger"></span>
+                                </div>
+                            </div>*@
+                        <input type="hidden"
+                               asp-for="SocialStoresGoogleMap[i].StoreBranchId"
+                               value="@selectListBraches.FirstOrDefault(x => x.Value == Model.SocialStoresGoogleMap[i].StoreBranchId.ToString()).Value" />
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <label class="form-control-label sm-bolder"><span class="text-primary font-weight-bold">(@selectListBraches.FirstOrDefault(x => x.Value == Model.SocialStoresGoogleMap[i].StoreBranchId.ToString()).Text)</span> النقاط الممنوحة</label>
+                                <input asp-for="SocialStoresGoogleMap[i].RewardNumberOfCoins" class="form-control border-gray activation__input2">
+                                <span asp-validation-for="SocialStoresGoogleMap[i].RewardNumberOfCoins" class="text-danger"></span>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group pt-3">
+            <button type="submit" class="rounded btn btn-primary">حفظ التغيرات</button>
+        </div>
+
+    </form>
+
+
+</div>
+
+@section Scripts {
+    <script>
+        $(".activation__checkbox1").change(function () {
+            var input_element = $(this).closest('.form-group').find('.activation__input1');
+            if (this.checked) {
+                $(input_element).prop('disabled', false);
+            } else {
+                $(input_element).prop('disabled', true);
+            }
+        });
+
+        $(".activation__checkbox2").change(function () {
+            var input_element = $(this).closest('.card-body').find('.activation__input2');
+            if (this.checked) {
+                $(input_element).prop('disabled', false);
+            } else {
+                $(input_element).prop('disabled', true);
+            }
+        });
+    </script>
+    <script>
+        $('.selectpicker').selectpicker();
+        PageLoadActions();
+    </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}

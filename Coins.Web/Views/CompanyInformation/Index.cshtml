@@ -1,0 +1,73 @@
+﻿@model Coins.Core.Models.Domins.Home.GeneralSettings
+@{
+    ViewData["Title"] = "معلومات الشركة";
+}
+
+@section Css{
+    <style>
+        .fa, .fab {
+            color: blue !important
+        }
+
+        /*.control-label {
+            color:#535353 !important
+        }*/
+    </style>
+}
+<div class="kt-portlet kt-portlet--mobile">
+    <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="kt-font-brand flaticon2-infographic"></i>
+            </span>
+            <h3 class="kt-portlet__head-title">
+                معلومات عامة عن الشركة
+            </h3>
+        </div>
+    </div>
+    @if (ViewBag.EditStatus != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" style="background-color: #68dc39;border: none;margin-bottom: 0px!important;" role="alert">
+            <button type="button" data-dismiss="alert" aria-label="Close" style="background-color:#68dc39;border:none;cursor:pointer;margin-bottom:-5px!important">
+                <i class="fa fa-times" style="color: #000000; font-size: 25px;background-color:#68dc39"> </i>
+            </button>
+            <strong style="font-size:15px;padding-right:20px">@ViewBag.EditStatus</strong>
+
+        </div>
+    }
+    <div class="kt-portlet__body">
+        <form asp-action="Index" method="post">
+            <input type="hidden" asp-for="SettingId" />
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="control-label">رابط تطبيق Google Play</label>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fab fa-google-play"></i></span>
+                        </div>
+                        <input class="form-control" asp-for="GooglePlayMrCoinsAppLink" autocomplete="on">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="control-label">رابط تطبيق App Store</label>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fab fa-app-store"></i></span>
+                        </div>
+                        <input class="form-control" asp-for="AppleStoreMrCoinsAppLink" autocomplete="on">
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">حفظ</button>
+                <a href="/" class="btn btn-default waves-effect">رجوع</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+    </script>
+}

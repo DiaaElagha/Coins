@@ -1,0 +1,208 @@
+﻿@model Coins.Web.Models.ViewModels.MyStoreEditVM
+@{
+    ViewData["Title"] = "المعلومات الرئيسية";
+}
+
+@section Css{
+    <style>
+        .fa, .fab {
+            color: blue !important
+        }
+
+        .form-group {
+            margin-bottom: 0.3rem !important;
+        }
+        /*.control-label {
+            color:#535353 !important
+        }*/
+    </style>
+}
+<div class="kt-portlet kt-portlet--mobile">
+    <partial name="_MsgPartial" />
+    <div class="kt-portlet__body">
+
+        <form asp-action="Index" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="Name" class="form-control-label sm-bolder">اختر الشعار </label>
+                        <input name="ImageLogo" type="file" class="form-control">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Name" asp-for="StoreNameAr" class="form-control-label sm-bolder"></label>
+                        <input asp-for="StoreNameAr" class="form-control">
+                        <span asp-validation-for="StoreNameAr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Latitude" asp-for="StoreNameEn" class="form-control-label sm-bolder"></label>
+                        <input asp-for="StoreNameEn" class="form-control">
+                        <span asp-validation-for="StoreNameEn" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Name" asp-for="StoreDescriptionAr" class="form-control-label sm-bolder"></label>
+                        <textarea asp-for="StoreDescriptionAr" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="StoreDescriptionAr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="Name" asp-for="StoreDescriptionEn" class="form-control-label sm-bolder"></label>
+                        <textarea asp-for="StoreDescriptionEn" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="StoreDescriptionEn" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-4">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="Name" asp-for="StoreCategoryId" class="form-control-label sm-bolder"></label>
+                        <select asp-for="StoreCategoryId" id="area-id-receiver" asp-items="ViewBag.CategoriesList" data-size="6" data-live-search="true" class="rounded selectpicker" data-width="100%">
+                            <option value="">اختر التصنيف</option>
+                        </select>
+                        <span asp-validation-for="StoreCategoryId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="Name" asp-for="StorePriceTypeId" class="form-control-label sm-bolder"></label>
+                        <select asp-for="StorePriceTypeId" id="area-id-receiver" asp-items="ViewBag.PriceTypesList" data-size="6" data-live-search="true" class="rounded selectpicker" data-width="100%">
+                            <option value="">اختر النوع</option>
+                        </select>
+                        <span asp-validation-for="StorePriceTypeId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group pt-3">
+                <button type="submit" class="rounded btn btn-primary">حفظ التغيرات</button>
+
+            </div>
+
+        </form>
+
+        <div class="row pt-4">
+            <div class="col-md-3">
+                <h5 class="bolder">قائمة المنتجات</h5>
+            </div>
+            <div class="col-md-9 text-right">
+                <a href="~/StoreProducts/Create" title="اضافة منتج جديد" class="bolder color-mrcoins">
+                    <i class="la la-plus-circle fa-lg "></i>
+                    إضافة منتج
+                </a>
+            </div>
+        </div>
+
+        <!--begin: Datatable -->
+        <table class="table table-striped table-bordered table-hover table-checkable" id="dataTableId" style="text-align:center">
+            <thead>
+                <tr>
+                    <th>اسم المنتج</th>
+                    <th>الوصف</th>
+                    <th>السعر</th>
+                    <th>تاريخ الانشاء</th>
+                    <th width="10%">العمليات</th>
+                </tr>
+            </thead>
+        </table>
+
+        <!--end: Datatable -->
+    </div>
+</div>
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script>
+        $(function () {
+            $(".DTForm").submit(function () {
+                dataSourceAjaxServer.init();
+                return false;
+            });
+        });
+        var dataSourceAjaxServer = function () {
+            var initTable1 = function () {
+                var table = $('#dataTableId');
+                // begin first table
+                table.DataTable({
+                    language: {
+                        emptyTable: "لا يوجد بيانات لعرضها", info: "عرض _START_ الى _END_ من _TOTAL_ صف", infoEmpty: "لا يوجد نتائج", infoFiltered: "(filtered1 من _MAX_ اجمالي صفوف)", lengthMenu: "_MENU_", search: "بحث", zeroRecords: "لا يوجد نتائج لعرضها"
+                    },
+                    responsive: true,
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    sPaginationType: "full_numbers",
+                    bDestroy: true,
+                    bSort: false,
+                    bLengthChange: true,
+                    dom:
+                        "<'row'<'col-sm-12'tr>>" +
+                        "<'row'<'col-sm-4'i><'col-sm-4 text-center'l><'col-sm-4'p>>",
+                    ajax: {
+                        type: "POST",
+                        contentType: "application/json",
+                        url: '@Url.Action("AjaxData", "StoreProducts")',
+                        data: function (d) {
+                            d.SearchKey = ($("[name=SearchKey]").val());
+                            return JSON.stringify(d);
+                        }
+                    },
+                    columns: [
+                        {
+                            "render": function (data, type, row) {
+                                return '<span>' + row["StoreProductNameAr"] + '</span><br ><span>' + row["StoreProductNameEn"] + '</span>';
+                            }
+                        },
+                        { data: 'StoreProductDescriptionAr' },
+                        {
+                            "render": function (data, type, row) {
+                                return '<span style="font-size: 13px;" class="label label-sm text-black rounded label-primary bg-secondary label-inline font-weight-bold pr-2 pl-2">' + row["StoreProductPrice"] + ' JOD</span>';
+                            }
+                        },
+                        { data: 'InsertDate' },
+                        { data: 'Actions', responsivePriority: -1 },
+                    ],
+                    columnDefs: [
+                        {
+                            targets: -1,
+                            orderable: false,
+                            render: function (data, type, row, meta) {
+                                return ''
+                                    + '<span class="dropdown">'
+                                    + '<a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">'
+                                    + '<i class="la la-ellipsis-h"></i></a>'
+                                    + '<div class="dropdown-menu dropdown-menu-right">'
+                                    + '<a class="Confirm dropdown-item text-danger" tname="#dataTableId" href="@Url.Action("Delete", "StoreProducts")/' + row["StoreProductId"] + '"><i class="la la-trash color-mrcoins"></i> حذف المنتج</a>'
+                                    + '</div></span>'
+                                    + '<a href="@Url.Action("Edit", "StoreProducts")/' + row["StoreProductId"] + '" title="تعديل المنتج" class="btn btn-sm btn-clean btn-icon btn-icon-md"><i class="la la-edit"></i></a>';
+                            },
+                        }
+                    ],
+                });
+            };
+
+            return {
+                init: function () {
+                    initTable1();
+                },
+            };
+        }();
+        jQuery(document).ready(function () {
+            dataSourceAjaxServer.init();
+        });
+
+
+    </script>
+}

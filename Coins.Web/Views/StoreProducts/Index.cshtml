@@ -1,0 +1,146 @@
+﻿@{
+    ViewData["Title"] = "المنتجات";
+}
+
+@section Css{
+    <style>
+    </style>
+}
+<div class="kt-portlet kt-portlet--mobile">
+    @if (TempData["EditStatus"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" style="background-color: #68dc39;border: none;margin-bottom: 0px!important;" role="alert">
+            <button type="button" data-dismiss="alert" aria-label="Close" style="background-color:#68dc39;border:none;cursor:pointer;margin-bottom:-5px!important">
+                <i class="fa fa-times" style="color: #000000; font-size: 25px;background-color:#68dc39"> </i>
+            </button>
+            <strong style="font-size:15px;padding-right:20px">@TempData["EditStatus"]</strong>
+
+        </div>
+    }
+    <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="kt-font-brand flaticon2-user-1"></i>
+            </span>
+            <h3 class="kt-portlet__head-title">
+                فهرس المنتجات في النظام
+            </h3>
+        </div>
+        <div class="kt-portlet__head-toolbar">
+            <div class="kt-portlet__head-wrapper">
+                <div class="kt-portlet__head-actions">
+                    <span title="اضافة منتج جديد" data-toggle="kt-tooltip" data-placement="top">
+                        <a href="~/StoreProducts/Create" title="اضافة منتج جديد" class="btn btn-brand btn-elevate btn-icon-sm">
+                            <i class="la la-plus"></i>
+                            اضافة جديد
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="kt-portlet__body">
+        <form class="DTForm">
+            <div class="row">
+                <div class="col-5">
+                    <input class="form-control" type="search" placeholder="ابحث بالاسم  ..." name="SearchKey">
+                </div>
+            </div>
+        </form>
+
+        <!--begin: Datatable -->
+        <table class="table table-striped table-bordered table-hover table-checkable" id="dataTableId" style="text-align:center">
+            <thead>
+                <tr>
+                    <th>اسم المنتج</th>
+                    <th>اسم المنتج</th>
+                    <th>السعر</th>
+                    <th>تاريخ الانشاء</th>
+                    <th width="10%">العمليات</th>
+                </tr>
+            </thead>
+        </table>
+
+        <!--end: Datatable -->
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $(".DTForm").submit(function () {
+                dataSourceAjaxServer.init();
+                return false;
+            });
+        });
+        var dataSourceAjaxServer = function () {
+            var initTable1 = function () {
+                var table = $('#dataTableId');
+                // begin first table
+                table.DataTable({
+                    language: {
+                        emptyTable: "لا يوجد بيانات لعرضها", info: "عرض _START_ الى _END_ من _TOTAL_ صف", infoEmpty: "لا يوجد نتائج", infoFiltered: "(filtered1 من _MAX_ اجمالي صفوف)", lengthMenu: "_MENU_", search: "بحث", zeroRecords: "لا يوجد نتائج لعرضها"
+                    },
+                    responsive: true,
+                    searchDelay: 500,
+                    processing: true,
+                    serverSide: true,
+                    sPaginationType: "full_numbers",
+                    bDestroy: true,
+                    bSort: false,
+                    bLengthChange: true,
+                    dom:
+                        "<'row'<'col-sm-12'tr>>" +
+                        "<'row'<'col-sm-4'i><'col-sm-4 text-center'l><'col-sm-4'p>>",
+                    ajax: {
+                        type: "POST",
+                        contentType: "application/json",
+                        url: '@Url.Action("AjaxData", "StoreProducts")',
+                        data: function (d) {
+                            d.SearchKey = ($("[name=SearchKey]").val());
+                            return JSON.stringify(d);
+                        }
+                    },
+                    columns: [
+                        { data: 'StoreProductNameAr' },
+                        { data: 'StoreProductNameEn' },
+                        {
+                            "render": function (data, type, row) {
+                                return '<span style="font-size: 13px;" class="label label-sm text-black rounded label-primary bg-secondary label-inline font-weight-bold pr-2 pl-2">' + row["StoreProductPrice"] + '</span>';
+                            }
+                        },
+                        { data: 'InsertDate' },
+                        { data: 'Actions', responsivePriority: -1 },
+                    ],
+                    columnDefs: [
+                        {
+                            targets: -1,
+                            orderable: false,
+                            render: function (data, type, row, meta) {
+                                return ''
+                                    + '<span class="dropdown">'
+                                    + '<a href="#" class="btn btn-sm btn-clean btn-icon btn-icon-md" data-toggle="dropdown" aria-expanded="true">'
+                                    + '<i class="la la-ellipsis-h"></i></a>'
+                                    + '<div class="dropdown-menu dropdown-menu-right">'
+                                    + '<a class="Confirm dropdown-item text-danger" tname="#dataTableId" href="@Url.Action("Delete", "StoreProducts")/' + row["StoreProductId"] + '"><i class="la la-trash text-danger"></i> حذف المنتج</a>'
+                                    + '</div></span>'
+                                    + '<a href="@Url.Action("Edit", "StoreProducts")/' + row["StoreProductId"] + '" title="تعديل المنتج" class="PopUp btn btn-sm btn-clean btn-icon btn-icon-md"><i class="la la-edit"></i></a>';
+                            },
+                        }
+                    ],
+                });
+            };
+
+            return {
+                init: function () {
+                    initTable1();
+                },
+            };
+        }();
+        jQuery(document).ready(function () {
+            dataSourceAjaxServer.init();
+        });
+
+
+    </script>
+}

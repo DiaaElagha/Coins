@@ -1,0 +1,98 @@
+﻿@model Coins.Web.Models.ViewModels.VoucherVM
+
+@{
+    ViewData["Title"] = "اضافة قسيمة";
+}
+<style>
+</style>
+<div class="kt-portlet kt-portlet--mobile">
+    <div class="kt-portlet__body">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="Name" asp-for="VoucherNameAr" class="form-control-label sm-bolder"></label>
+                        <input asp-for="VoucherNameAr" class="form-control border-gray">
+                        <span asp-validation-for="VoucherNameAr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <label for="Latitude" asp-for="VoucherNameEn" class="form-control-label sm-bolder"></label>
+                        <input asp-for="VoucherNameEn" class="form-control border-gray">
+                        <span asp-validation-for="VoucherNameEn" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="VoucherDescrptionAr" asp-for="VoucherDescrptionAr" class="form-control-label sm-bolder"></label>
+                        <textarea asp-for="VoucherDescrptionAr" class="form-control border-gray" rows="3"></textarea>
+                        <span asp-validation-for="VoucherDescrptionAr" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="VoucherDescrptionEn" asp-for="VoucherDescrptionEn" class="form-control-label sm-bolder"></label>
+                        <textarea asp-for="VoucherDescrptionEn" class="form-control border-gray" rows="3"></textarea>
+                        <span asp-validation-for="VoucherDescrptionEn" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="NumOfCoins" asp-for="NumOfCoins" class="form-control-label sm-bolder"></label>
+                        <input asp-for="NumOfCoins" class="form-control border-gray">
+                        <span asp-validation-for="NumOfCoins" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="VoucherExpiedAfterDay" asp-for="VoucherExpiredAfterDay" class="form-control-label sm-bolder"></label>
+                        <input asp-for="VoucherExpiredAfterDay" class="form-control border-gray">
+                        <span asp-validation-for="VoucherExpiredAfterDay" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="IsActive" asp-for="IsActive" class="form-control-label sm-bolder"></label>
+                        <br />
+                        <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--brand">
+                            <label>
+                                <input type="checkbox" asp-for="IsActive">
+                                <span></span>
+                            </label>
+                        </span>
+                        <span asp-validation-for="IsActive" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="MainAttachment" class="form-control-label sm-bolder">صورة القسيمة</label>
+                        <input type="file" name="MainAttachment" class="form-control border-gray">
+                    </div>
+                </div>
+            </div>
+
+            <a href="@Context.Request.Headers["Referer"].ToString()" class="rounded btn btn-secondary">رجوع</a>
+            <button type="submit" class="rounded btn btn-primary">حفظ</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    $('.selectpicker').selectpicker();
+    PageLoadActions();
+</script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+

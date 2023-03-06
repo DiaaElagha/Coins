@@ -1,0 +1,142 @@
+﻿@model Coins.Web.Models.ViewModels.ReferralFriendsVM
+@using Coins.Web.Models.ViewModels
+@using Coins.Core.Constants.Enums
+@{
+    ViewData["Title"] = "مشاركة الأصدقاء";
+}
+
+@section Css{
+    <style>
+    </style>
+}
+
+<div class="kt-portlet kt-portlet--mobile" style="background-color:rgb(0 0 0 / 0.00)!important">
+    <partial name="_MsgPartial" />
+
+    <form asp-action="Index" method="post" enctype="multipart/form-data">
+        <div class="card border-0 p-2">
+            <div class="card-body">
+                <label>
+                    <span class="kt-switch kt-switch--sm kt-switch--outline kt-switch--icon kt-switch--brand">
+                        <label>
+                            <input type="checkbox" asp-for="IsActiveReferralFriend">
+                            <span></span>
+                            <label class="pl-2 sm-bolder h5">مشاركة الاصدقاء</label>
+                        </label>
+                    </span>
+                </label>
+                <h6 class="pt-1 pb-1">كافئ عملائك الحاليين على مشاركة أصدقائهم وتشجيعهم على تجربة علامتك التجارية،يحصل العميل الحالي على مكافأته بمجرد قيام الصديق بتقديم أول طلب له</h6>
+                <a href="#" class="color-mrcoins"><u>تعرف على المزيد حول برنامج مشاركة الاصدقاء</u></a>
+            </div>
+        </div>
+        @*مكافأة العميل الذي يقوم بالمشاركة*@
+
+        <div class="card border-0 mt-3 p-2">
+            <div class="card-body">
+                <h5 class="sm-bolder">مكافأة العميل الذي يقوم بالمشاركة</h5>
+                <h6 class="pt-1 pb-1 color-gray">يحصل العميل الحالي على مكافأته من النقاط بمجرد قيام الصديق بتقديم أول طلب له</h6>
+                <br />
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="Name" asp-for="DefineNumOfReferralCustomerCoins" class="form-control-label sm-bolder"></label>
+                            <input asp-for="DefineNumOfReferralCustomerCoins" class="form-control border-gray">
+                            <span class="color-gray">يكتسب العملاء X نقطة مقابل كل دينار يتم انفاقه</span>
+                            <span asp-validation-for="DefineNumOfReferralCustomerCoins" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card border-0 mt-3 p-2">
+            <div class="card-body mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="pl-2 sm-bolder">مكافأة الصديق عند أول طلب له</label>
+                            <br />
+                            <span class="color-gray">يحصل الصديق على مكافأته بقسيمة خصم على اول طلب له</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Name" asp-for="voucherFriendReward.VoucherNameAr" class="form-control-label sm-bolder" style="margin-bottom:13px!important"></label>
+                            <input asp-for="voucherFriendReward.VoucherNameAr" class="form-control border-gray">
+                            <span asp-validation-for="voucherFriendReward.VoucherNameAr" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Name" asp-for="voucherFriendReward.VoucherNameEn" class="form-control-label sm-bolder" style="margin-bottom:13px!important"></label>
+                            <input asp-for="voucherFriendReward.VoucherNameEn" class="form-control border-gray">
+                            <span asp-validation-for="voucherFriendReward.VoucherNameEn" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Name" asp-for="voucherFriendReward.VoucherDescrptionAr" class="form-control-label sm-bolder" style="margin-bottom:13px!important"></label>
+                            <textarea asp-for="voucherFriendReward.VoucherDescrptionAr" class="form-control border-gray" rows="3"></textarea>
+                            <span asp-validation-for="voucherFriendReward.VoucherDescrptionAr" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Name" asp-for="voucherFriendReward.VoucherDescrptionEn" class="form-control-label sm-bolder" style="margin-bottom:13px!important"></label>
+                            <textarea asp-for="voucherFriendReward.VoucherDescrptionEn" class="form-control border-gray" rows="3"></textarea>
+                            <span asp-validation-for="voucherFriendReward.VoucherDescrptionEn" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="Name" asp-for="voucherFriendReward.VoucherDiscountValue" class="form-control-label sm-bolder" style="margin-bottom:13px!important"></label>
+                            <input asp-for="voucherFriendReward.VoucherDiscountValue" class="form-control border-gray">
+                            <span class="color-gray">سيحصل الصديق على قسيمة خصم بقيمة X% على أول طلب له فقط</span>
+                            <span asp-validation-for="voucherFriendReward.VoucherDiscountValue" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="Name" asp-for="voucherFriendReward.VoucherTerms" class="form-control-label sm-bolder" style="margin-bottom:13px!important"></label>
+                            <textarea asp-for="voucherFriendReward.VoucherTerms" class="form-control border-gray" rows="5"></textarea>
+                            <span asp-validation-for="voucherFriendReward.VoucherTerms" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="Name" asp-for="voucherFriendReward.VoucherMainAttachmentId" class="form-control-label sm-bolder"></label>
+                            <input asp-for="voucherFriendReward.VoucherMainAttachmentId" type="file" class="form-control">
+                            <span asp-validation-for="voucherFriendReward.VoucherMainAttachmentId" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group pt-3">
+                <button type="submit" class="rounded btn btn-primary">حفظ التغيرات</button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+
+@section Scripts {
+    <script>
+        $("#can-publish").val("true");
+    </script>
+}

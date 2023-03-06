@@ -1,0 +1,33 @@
+﻿@model Coins.Web.Models.ViewModels.StorePriceTypeVM
+
+@{
+    ViewData["Title"] = "تعديل التصنيف";
+    Layout = null;
+}
+
+<form asp-action="Edit" method="post" class="ajaxForm" tname="#dataTableId">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Name" asp-for="StorePriceTypeAr" class="form-control-label"></label>
+                <input asp-for="StorePriceTypeAr" class="form-control">
+                <span asp-validation-for="StorePriceTypeAr" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Latitude" asp-for="StorePriceTypeEn" class="form-control-label"></label>
+                <input asp-for="StorePriceTypeEn" class="form-control">
+                <span asp-validation-for="StorePriceTypeEn" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="rounded btn btn-secondary" data-dismiss="modal">اغلاق</button>
+    <button type="submit" class="rounded btn btn-primary">ارسال</button>
+</form>
+<script>
+    PageLoadActions();
+</script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>

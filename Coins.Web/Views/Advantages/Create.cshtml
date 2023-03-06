@@ -1,0 +1,41 @@
+﻿@model Coins.Web.Models.ViewModels.AdvantagesVM
+
+@{
+    ViewData["Title"] = "اضافة ميزة";
+    Layout = null;
+}
+
+<form asp-action="Create" method="post" class="ajaxForm" tname="#dataTableId" id="myForm" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Name" asp-for="AdvantageTitleAr" class="form-control-label"></label>
+                <input asp-for="AdvantageTitleAr" class="form-control">
+                <span asp-validation-for="AdvantageTitleAr" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Latitude" asp-for="AdvantageTitleEn" class="form-control-label"></label>
+                <input asp-for="AdvantageTitleEn" class="form-control">
+                <span asp-validation-for="AdvantageTitleEn" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <label for="Name" class="form-control-label">اختر ايقونة العرض</label>
+                <input name="ImageIcon" type="file" class="form-control">
+            </div>
+        </div>
+    </div>
+
+
+    <button type="button" class="rounded btn btn-secondary" data-dismiss="modal">اغلاق</button>
+    <button type="submit" class="rounded btn btn-primary">ارسال</button>
+</form>
+<script>
+    PageLoadActions();
+</script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+

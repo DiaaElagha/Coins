@@ -1,0 +1,83 @@
+﻿@model Coins.Web.Models.ViewModels.StoreSettingsVM
+@{
+    ViewData["Title"] = "اعدادات الشركة";
+}
+
+@section Css{
+    <style>
+        .fa, .fab {
+            color: blue !important
+        }
+        .form-group {
+             margin-bottom: 0.3rem!important; 
+        }
+        /*.control-label {
+            color:#535353 !important
+        }*/
+    </style>
+}
+<div class="kt-portlet kt-portlet--mobile">
+    <div class="kt-portlet__head kt-portlet__head--lg">
+        <div class="kt-portlet__head-label">
+            <span class="kt-portlet__head-icon">
+                <i class="kt-font-brand flaticon2-infographic"></i>
+            </span>
+            <h3 class="kt-portlet__head-title">
+                اعدادات عامة عن الشركة
+            </h3>
+        </div>
+    </div>
+    @if (ViewBag.EditStatus != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" style="background-color: #68dc39;border: none;margin-bottom: 0px!important;" role="alert">
+            <button type="button" data-dismiss="alert" aria-label="Close" style="background-color:#68dc39;border:none;cursor:pointer;margin-bottom:-5px!important">
+                <i class="fa fa-times" style="color: #000000; font-size: 25px;background-color:#68dc39"> </i>
+            </button>
+            <strong style="font-size:15px;padding-right:20px">@ViewBag.EditStatus</strong>
+
+        </div>
+    }
+    <div class="kt-portlet__body">
+        <form asp-action="Index" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <label asp-for="FirstTimeVoucherId" class="control-label"></label>
+                    <select asp-for="FirstTimeVoucherId" id="area-id-receiver" asp-items="ViewBag.VouchersList" data-size="6" data-live-search="true" class="rounded selectpicker" data-width="100%">
+                        <option value="">اختر القسيمة</option>
+                    </select>
+                    <span asp-validation-for="FirstTimeVoucherId" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="ExpiedCoinsAfterDays" class="control-label"></label>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-clock"></i></span>
+                        </div>
+                        <input class="form-control" asp-for="ExpiedCoinsAfterDays" autocomplete="on">
+                    </div>
+                    <span asp-validation-for="ExpiedCoinsAfterDays" class="text-danger"></span>
+                </div>
+                <div class="col-md-4">
+                    <label asp-for="DefineCurrentCurrencyToCoins" class="control-label"></label>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fa fa-money-bill"></i></span>
+                        </div>
+                        <input class="form-control" asp-for="DefineCurrentCurrencyToCoins" autocomplete="on">
+                    </div>
+                    <span asp-validation-for="DefineCurrentCurrencyToCoins" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">حفظ</button>
+                <a href="/" class="btn btn-default waves-effect">رجوع</a>
+            </div>
+        </form>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+    </script>
+}

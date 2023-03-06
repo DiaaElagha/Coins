@@ -1,0 +1,78 @@
+﻿@model Coins.Web.Models.ViewModels.CasherVM
+@using System.Reflection
+@using Coins.Core.Constants.Enums
+@{
+    ViewData["Title"] = "اضافة نوع";
+    Layout = null;
+}
+<form asp-action="Create" method="post" class="ajaxForm" tname="#dataTableId" id="myForm">
+    <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
+    <input asp-for="StoreBranchId" type="hidden" value="@Context.Request.Query["StoreBranchId"]">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Name" asp-for="CasherUserName" class="form-control-label text-primary"></label>
+                <input asp-for="CasherUserName" class="form-control">
+                <span asp-validation-for="CasherUserName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Latitude" asp-for="FullName" class="form-control-label text-primary"></label>
+                <input asp-for="FullName" class="form-control">
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Name" asp-for="ExpiryDate" class="form-control-label text-primary"></label>
+                <input asp-for="ExpiryDate" class="form-control">
+                <span asp-validation-for="ExpiryDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Name" asp-for="Gender" class="form-control-label"></label>
+                <select asp-for="Gender" asp-items="Html.GetEnumSelectList<Gender>()" class="rounded selectpicker" data-width="100%">
+                    <option value="">اختر الجنس</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Latitude" asp-for="IsActive" class="form-control-label"></label>
+                <br />
+                <span class="kt-switch kt-switch--outline kt-switch--icon kt-switch--brand">
+                    <label>
+                        <input type="checkbox" checked="checked" asp-for="IsActive">
+                        <span></span>
+                    </label>
+                </span>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="Name" asp-for="Address" class="form-control-label"></label>
+                <input asp-for="Address" class="form-control">
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="rounded btn btn-secondary" data-dismiss="modal">اغلاق</button>
+    <button type="submit" class="rounded btn btn-primary">ارسال</button>
+</form>
+<script>
+    $('.selectpicker').selectpicker();
+    PageLoadActions();
+</script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+

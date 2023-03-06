@@ -1,0 +1,12 @@
+﻿
+
+@if (TempData["EditStatus"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" style="background-color: #68dc39;border: none;margin-bottom: 0px!important;" role="alert">
+        <button type="button" data-dismiss="alert" aria-label="Close" style="background-color:#68dc39;border:none;cursor:pointer;margin-bottom:-5px!important">
+            <i class="fa fa-times" style="color: #000000; font-size: 25px;background-color:#68dc39"> </i>
+        </button>
+        <strong style="font-size:15px;padding-right:20px">@TempData["EditStatus"]</strong>
+
+    </div>
+}

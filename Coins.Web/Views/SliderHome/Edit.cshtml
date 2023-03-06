@@ -1,0 +1,56 @@
+﻿@model Coins.Web.Models.ViewModels.SliderHomeVM
+
+@{
+    ViewData["Title"] = "تعديل التصنيف";
+    Layout = null;
+}
+
+<form asp-action="Edit" method="post" class="ajaxForm" tname="#dataTableId" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="TitleAr" asp-for="TitleAr" class="form-control-label"></label>
+                <input asp-for="TitleAr" class="form-control">
+                <span asp-validation-for="TitleAr" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="TitleEn" asp-for="TitleEn" class="form-control-label"></label>
+                <input asp-for="TitleEn" class="form-control">
+                <span asp-validation-for="TitleEn" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="ImageBaner" class="form-control-label">اختر صورة العرض</label>
+                <input name="ImageBaner" required type="file" class="form-control">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Name" asp-for="StoreBranchIdButton" class="form-control-label"></label>
+                <select asp-for="StoreBranchIdButton" asp-items="ViewBag.StoreBranchsList" data-size="6" data-live-search="true" class="rounded selectpicker" data-width="100%">
+                    <option value="">اختر فرع المتجر</option>
+                </select>
+                <span asp-validation-for="StoreBranchIdButton" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="ButtonTitle" asp-for="ButtonTitle" class="form-control-label"></label>
+                <input asp-for="ButtonTitle" class="form-control">
+                <span asp-validation-for="ButtonTitle" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="rounded btn btn-secondary" data-dismiss="modal">اغلاق</button>
+    <button type="submit" class="rounded btn btn-primary">ارسال</button>
+</form>
+<script>
+    $('.selectpicker').selectpicker();
+    PageLoadActions();
+</script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
